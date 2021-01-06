@@ -4,11 +4,14 @@ This is a template for TiDB's change proposal process, documented [here](./READM
 
 # Proposal: <!-- Title -->
 
-- Author(s):     <!-- Author Name, Co-Author Name, with the link(s) of the GitHub profile page -->
-- Last updated:  <!-- Date -->
+- Author(s):     Ji Sun, Xuanhe Zhou, Xiang Yu<!-- Author Name, Co-Author Name, with the link(s) of the GitHub profile page -->
+- Last updated:  2021-01-06<!-- Date -->
 - Discussion at: <!-- https://github.com/pingcap/tidb/issues/XXX -->
 
 ## Abstract
+Knob tuning and query optimization are two core techniques in modern database management system, and they are vital to database for achieving high performance (e.g,. high throughput and low latency). However, knob tuning and query optimization are still suboptimal due to that they are NP-hard problem and cost estimate is incorrect on bias and correlated datasets.  In this work, we utilize deep reinformance learning to develop two modules, automatic knob tuning (QTune) and automatic query optimizer (Autohint).  
+QTune first featurizes the SQL queries by considering rich features of the SQL queries. Then QTune feeds the query features into the DRL model to choose suitable configurations. We propose a Double-State Deep Deterministic Policy Gradient (DS-DDPG) model to enable query-aware database configuration tuning, which utilizes the actor-critic networks to tune the database configurations based on both the query vector and database states. QTune provides three database tuning granularities: query-level, workload-level, and cluster-level tuning. We deployed our techniques onto three real database systems, and experimental results show that QTune achieves high performance and outperforms the state-of-the-art tuning methods.  
+Autohint utilizes Tree-LSTM to featurize the partial query plan, and integrate the embedding with Thompson sampling. Autohint is able to learn the ...
 
 <!--
 A short summary of the proposal:
@@ -18,7 +21,8 @@ A short summary of the proposal:
 -->
 
 ## Background
-
+For knob tuning, the challenges are three folds. (1) DBAs cannot tune a lot of database instances on different environments (e.g., different database vendors). (2) Traditional machine-learning methods either cannot find good configurations or rely on a lot of high-quality training examples which are rather hard to obtain. (3) they only support coarse-grained tuning (e.g., workload-level tuning) but cannot provide fine-grained tuning (e.g., query-level tuning).  
+For Query Optimization, ...
 <!--
 An introduction of the necessary background and the problem being solved by the proposed change:
 - The drawback of the current feature and the corresponding use case
